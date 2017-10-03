@@ -11,7 +11,7 @@ if [ ! -d results ]; then
 fi
 
 # create test csv files
-for n in 1000 10000 1000000 1000000 1000000; do
+for n in 10 100 1000 10000 100000 1000000 10000000; do
     file="test_"$n"_rows.csv"
     
     if [ ! -f $file ]; then
@@ -20,4 +20,6 @@ for n in 1000 10000 1000000 1000000 1000000; do
 done
 
 # run pandas benchmark
-# python run_pandas_benchmark.py
+python benchmark_test.py postgre
+python benchmark_test.py pandas
+
