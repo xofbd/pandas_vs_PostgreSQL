@@ -36,14 +36,7 @@ if __name__ == '__main__':
     import os
     import sys
 
-    # check input
-    if sys.argv[1].lower() == 'pandas':
-        tool = 'pandas'
-    elif sys.argv[1].lower() == 'postgre' or sys.argv.lower() == 'postgresql':
-        tool = 'postgre'
-    else:
-        raise ValueError("tool must either be pandas or postgre")
-
+    tool = sys.argv[1].lower()
     files = os.listdir('csv')
     result_dict = {}
 
