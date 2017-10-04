@@ -3,7 +3,7 @@ from pandas_tasks import PandasTasks
 from postgre_tasks import PostgreTasks
 
 
-def run_test(tool, csv_file):
+def run_test(tool, csv_file, N=10):
 
     # define tool to use
     if tool.lower() == 'pandas':
@@ -13,7 +13,6 @@ def run_test(tool, csv_file):
     else:
         raise ValueError("tool must either be pandas or postgre")
 
-    N = 10  # number of test replicates
     tasks = ('load', 'select', 'filter', 'groupby_agg')
     benchmark_dict = {}
 
@@ -41,7 +40,7 @@ if __name__ == '__main__':
     result_dict = {}
 
     for f in files:
-        results, row = run_test(tool, 'csv/' + f)
+        results, row = run_test(tool, 'csv/' + f, N=10)
         result_dict[str(row)] = results
 
     # dump dictionary to json
