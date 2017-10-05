@@ -38,7 +38,7 @@ class PostgreTasks(object):
 
     def groupby_agg(self):
         query = """
-        SELECT AVG(score_1)
+        SELECT AVG(score_1), MAX(score_2)
         FROM test_table
         GROUP BY section;
         """
