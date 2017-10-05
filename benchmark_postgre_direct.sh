@@ -1,13 +1,11 @@
 #!/bin/bash
-# 1.) create task strings
-# 2.) create N replicates for loop
-# 3.) create case for which task to use
 # 4.) create stdout
 #     - create csv for each task results
 # {'1000': {'load':[...], 'select':[...]}}
 # take file with times and convert to list and dictionary (python function) and spit as json
 # after
 
+# runs postgre given query
 run_psql ()
 {
     for var in "$@"; do
@@ -16,6 +14,7 @@ run_psql ()
     done
 }
 
+# runs benchmark for given task
 run_test ()
 {
 for task in load select_ filter groupby_agg; do
@@ -39,8 +38,7 @@ for task in load select_ filter groupby_agg; do
     # repeat for N replicates
     for i in "seq 1 $2"; do
 	if [ $task = "load" ]; then
-	    time run_psql "$query1"
-	    time run_psql "$query2"
+	    time run_psql "$query1" "$query2"
 	else
 	    time run_psql "$query"
 	fi
@@ -49,8 +47,9 @@ done
 }
 
 # initialize test_table
-run_psql "DROP TABLE IF EXISTS test_table;"
-run_psql "CREATE TABLE test_table (score_1 float, score_2 float, section char(1));"
+drop_tb="DROP TABLE IF EXISTS test_table;"
+create_tb="CREATE TABLE test_table (score_1 float, score_2 float, section char(1));"
+run_psql "$drop_tb" "$create_tb"
 
 # loop through each csv file
 FILES=csv/*.csv
