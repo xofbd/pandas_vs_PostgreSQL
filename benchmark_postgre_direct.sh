@@ -17,6 +17,8 @@ run_psql ()
 run_test ()
 {
 for task in load select_ filter groupby_agg; do
+    echo $task >> time_results
+	
     case $task in
 	load) query1="DELETE FROM test_table;"
 	      query2a="\COPY test_table FROM ""'"$1"'"
@@ -35,38 +37,41 @@ for task in load select_ filter groupby_agg; do
     esac
 
     # repeat for N replicates
-    for i in "seq 1 $2"; do
+    for i in $(seq 1 $2); do
 	if [ $task = "load" ]; then
 	    T="$(date +%s%N)"
 	    run_psql "$query1" "$query2"
 	    T="$(($(date +%s%N)-T))"
-	    echo $T" nanoseconds" >> time_results
+	    echo $T >> time_results
 	else
 	    T="$(date +%s%N)"
 	    run_psql "$query"
 	    T="$(($(date +%s%N)-T))"
-	    echo $T" nanoseconds" >> time_results
+	    echo $T >> time_results
 	fi
     done
 done
 }
 
-# export -f run_psql
 
 # initialize test_table
 drop_tb="DROP TABLE IF EXISTS test_table;"
 create_tb="CREATE TABLE test_table (score_1 float, score_2 float, section char(1));"
 run_psql "$drop_tb" "$create_tb"
 
-if [ -f test_results  ]; then
-    rm  test_results
+# remove old time_results file
+if [ -f time_results  ]; then
+    rm time_results
 fi
-
 
 # loop through each csv file
 FILES=csv/*.csv
-N=2
+N=10
 
 for f in $FILES; do
     run_test $f $N
 done
+
+# run results formater
+
+# clean up
