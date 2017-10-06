@@ -9,7 +9,6 @@
 run_psql ()
 {
     for var in "$@"; do
-	echo $var
 	psql -U $USER -d $USER -c "$var" > /dev/null
     done
 }
@@ -41,23 +40,28 @@ for task in load select_ filter groupby_agg; do
 	    T="$(date +%s%N)"
 	    run_psql "$query1" "$query2"
 	    T="$(($(date +%s%N)-T))"
-	    echo $T" nanoseconds"
+	    echo $T" nanoseconds" >> time_results
 	else
 	    T="$(date +%s%N)"
 	    run_psql "$query"
 	    T="$(($(date +%s%N)-T))"
-	    echo $T" nanoseconds"
+	    echo $T" nanoseconds" >> time_results
 	fi
     done
 done
 }
 
-export -f run_psql
+# export -f run_psql
 
 # initialize test_table
 drop_tb="DROP TABLE IF EXISTS test_table;"
 create_tb="CREATE TABLE test_table (score_1 float, score_2 float, section char(1));"
 run_psql "$drop_tb" "$create_tb"
+
+if [ -f test_results  ]; then
+    rm  test_results
+fi
+
 
 # loop through each csv file
 FILES=csv/*.csv
