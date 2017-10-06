@@ -38,13 +38,21 @@ for task in load select_ filter groupby_agg; do
     # repeat for N replicates
     for i in "seq 1 $2"; do
 	if [ $task = "load" ]; then
-	    time run_psql "$query1" "$query2"
+	    T="$(date +%s%N)"
+	    run_psql "$query1" "$query2"
+	    T="$(($(date +%s%N)-T))"
+	    echo $T" nanoseconds"
 	else
-	    time run_psql "$query"
+	    T="$(date +%s%N)"
+	    run_psql "$query"
+	    T="$(($(date +%s%N)-T))"
+	    echo $T" nanoseconds"
 	fi
     done
 done
 }
+
+export -f run_psql
 
 # initialize test_table
 drop_tb="DROP TABLE IF EXISTS test_table;"
