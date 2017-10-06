@@ -16,8 +16,15 @@ run_psql ()
 # runs benchmark for given task
 run_test ()
 {
+
+# create results file for specific row number csv
+num_rows=$(echo $1 | grep -oP '(?<=_).*(?=_)')
+results_file=time_results_$num_rows
+touch $results_file
+
+# loop through each task
 for task in load select_ filter groupby_agg; do
-    echo $task >> time_results
+    echo $task >> $results_file
 	
     case $task in
 	load) query1="DELETE FROM test_table;"
@@ -41,13 +48,15 @@ for task in load select_ filter groupby_agg; do
 	if [ $task = "load" ]; then
 	    T="$(date +%s%N)"
 	    run_psql "$query1" "$query2"
-	    T="$(($(date +%s%N)-T))"
-	    echo $T >> time_results
+	    T="$(($(date +%s%N)-T))" # T="$(($(date +%s%N)-T))"
+	    echo "$query1" "$query2"
+	    echo $T >> $results_file
 	else
 	    T="$(date +%s%N)"
 	    run_psql "$query"
 	    T="$(($(date +%s%N)-T))"
-	    echo $T >> time_results
+	    echo "$query"
+	    echo $T >> $results_file
 	fi
     done
 done
@@ -66,12 +75,14 @@ fi
 
 # loop through each csv file
 FILES=csv/*.csv
-N=10
+N=5
 
 for f in $FILES; do
     run_test $f $N
 done
 
 # run results formater
+python format_results time_results
 
 # clean up
+rm time_results
