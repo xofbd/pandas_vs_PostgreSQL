@@ -6,7 +6,7 @@ def create_json(results_file):
     results_dict = dict(zip(tasks, range(len(tasks))))
 
     with open(results_file, 'r') as f:
-        task = f.readline()
+        task = f.readline().strip()
 
         replicates = []
         results = f.read().split()
@@ -17,7 +17,7 @@ def create_json(results_file):
                 task = r
                 replicates = []
             else:
-                replicates.append(int(r))
+                replicates.append(float(r) / 1E9)
 
     # dump dictionary to json
     with open('results.json', 'w') as f:
@@ -26,11 +26,12 @@ def create_json(results_file):
 
 def join_jsons(json_list, dict_keys):
     new_json = {}
+
     for f, key in zip(json_list, dict_keys):
         new_json[key] = json.load(f)
 
 if __name__ == '__main__':
     import sys
 
-    for
+    # for
     create_json(sys.argv[1])
