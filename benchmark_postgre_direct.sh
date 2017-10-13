@@ -23,7 +23,7 @@ results_file=time_results_$num_rows
 touch $results_file
 
 # loop through each task
-for task in load select_ filter groupby_agg; do
+for task in load select filter groupby_agg; do
     echo $task >> $results_file
 	
     case $task in
@@ -32,7 +32,7 @@ for task in load select_ filter groupby_agg; do
 	      query2b=" WITH DELIMITER ',';"
 	      query2=$query2a$query2b
 	      ;;
-	select_) query="SELECT section FROM test_table;"
+	select) query="SELECT section FROM test_table;"
 	      ;;
 	filter) query="SELECT section FROM test_table WHERE section='A';"
 	      ;;
@@ -46,16 +46,15 @@ for task in load select_ filter groupby_agg; do
     # repeat for N replicates
     for i in $(seq 1 $2); do
 	if [ $task = "load" ]; then
-	    T="$(date +%s%N)"
-	    run_psql "$query1" "$query2"
-	    T="$(($(date +%s%N)-T))" # T="$(($(date +%s%N)-T))"
+	    t1=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query1" > /dev/null)
+	    t2=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query2" > /dev/null)
+	    T=$(t1+t1)
+	    
+      
 	    echo "$query1" "$query2"
 	    echo $T >> $results_file
 	else
-	    T="$(date +%s%N)"
-	    run_psql "$query"
-	    T="$(($(date +%s%N)-T))"
-	    echo "$query"
+	    T=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query" > /dev/null)
 	    echo $T >> $results_file
 	fi
     done
