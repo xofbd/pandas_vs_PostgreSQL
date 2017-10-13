@@ -1,9 +1,4 @@
 #!/bin/bash
-# 4.) create stdout
-#     - create csv for each task results
-# {'1000': {'load':[...], 'select':[...]}}
-# take file with times and convert to list and dictionary (python function) and spit as json
-# after
 
 # runs postgre given query
 run_psql ()
@@ -46,16 +41,20 @@ for task in load select filter groupby_agg; do
     # repeat for N replicates
     for i in $(seq 1 $2); do
 	if [ $task = "load" ]; then
-	    t1=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query1" > /dev/null)
-	    t2=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query2" > /dev/null)
-	    T=$(t1+t1)
-	    
+	    #t1=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query1" > /dev/null)
+	    #t2=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query2" > /dev/null)
+	    #T=$(t1+t1)
+	    T="$(date +%s%N)"
+	    run_psql "$query1" "$query2"
+	    T="$(($(date +%s%N)-T))" # T="$(($(date +%s%N)-T))"
+	    echo "$query1" "$query2"
+	    echo $T >> $results_file	    
       
 	    echo "$query1" "$query2"
 	    echo $T >> $results_file
 	else
-	    T=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query" > /dev/null)
-	    echo $T >> $results_file
+	    # T=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query" > /dev/null)
+	    # echo $T >> $results_file
 	fi
     done
 done
@@ -67,9 +66,11 @@ drop_tb="DROP TABLE IF EXISTS test_table;"
 create_tb="CREATE TABLE test_table (score_1 float, score_2 float, section char(1));"
 run_psql "$drop_tb" "$create_tb"
 
-# remove old time_results file
-if [ -f time_results  ]; then
-    rm time_results
+# clean out parts directory
+if [ -d parts ]; then
+    rm -rf parts/*
+else
+    mkdir parts
 fi
 
 # loop through each csv file
@@ -80,8 +81,11 @@ for f in $FILES; do
     run_test $f $N
 done
 
-# run results formater
-python format_results time_results
+# move results files
+mv time_results* parts/
+
+# format results
+python format_results
 
 # clean up
-rm time_results
+rm -rf parts
