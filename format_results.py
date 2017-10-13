@@ -1,4 +1,5 @@
 def create_dict(results_file):
+    """Return dictionary of run time for each SQL task."""
     tasks = ('load', 'select', 'filter', 'groupby_agg')
     results_dict = {}
 
@@ -20,18 +21,20 @@ def create_dict(results_file):
     return results_dict
 
 if __name__ == '__main__':
+    import json
     import os
     import re
 
     full_results_dict = {}
-    results_files = os.listdir('parts/')
+    dir = 'parts/'
+    results_files = os.listdir(dir)
     pattern = re.compile(r'\d+')
 
     # loop through each part file
     for f in results_files:
         row_num = pattern.findall(f)[0]
-        full_results_dict[row_num] = create_dict(f)
+        full_results_dict[row_num] = create_dict(dir + f)
 
     # dump to json
-    with open("postgre_results.json", "w") as f:
+    with open("results/postgre_results.json", "w") as f:
         json.dump(full_results_dict, f)
