@@ -3,21 +3,22 @@ import json
 
 def create_json(results_file):
     tasks = ('load', 'select_', 'filter', 'groupby_agg')
-    results_dict = dict(zip(tasks, range(len(tasks))))
+    results_dict = {}
 
     with open(results_file, 'r') as f:
         task = f.readline().strip()
-
         replicates = []
         results = f.read().split()
 
         for r in results:
-            if r in results_dict.keys():
-                results_dict[task] = results
+            if r in tasks:
+                results_dict[task] = replicates
                 task = r
                 replicates = []
             else:
                 replicates.append(float(r) / 1E9)
+
+        results_dict[task] = replicates
 
     # dump dictionary to json
     with open('results.json', 'w') as f:
