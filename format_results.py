@@ -1,7 +1,4 @@
-import json
-
-
-def create_json(results_file):
+def create_dict(results_file):
     tasks = ('load', 'select', 'filter', 'groupby_agg')
     results_dict = {}
 
@@ -20,19 +17,21 @@ def create_json(results_file):
 
         results_dict[task] = replicates
 
-    # dump dictionary to json
-    with open('results.json', 'w') as f:
-        json.dump(results_dict, f)
-
-
-def join_jsons(json_list, dict_keys):
-    new_json = {}
-
-    for f, key in zip(json_list, dict_keys):
-        new_json[key] = json.load(f)
+    return results_dict
 
 if __name__ == '__main__':
-    import sys
+    import os
+    import re
 
-    # for
-    create_json(sys.argv[1])
+    full_results_dict = {}
+    results_files = os.listdir('parts/')
+    pattern = re.compile(r'\d+')
+
+    # loop through each part file
+    for f in results_files:
+        row_num = pattern.findall(f)[0]
+        full_results_dict[row_num] = create_dict(f)
+
+    # dump to json
+    with open("postgre_results.json", "w") as f:
+        json.dump(full_results_dict, f)
