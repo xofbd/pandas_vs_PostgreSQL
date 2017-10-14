@@ -77,7 +77,7 @@ fi
 
 # loop through each csv file
 FILES=csv/*.csv
-N=5
+N=100
 
 for f in $FILES; do
     run_test $f $N
