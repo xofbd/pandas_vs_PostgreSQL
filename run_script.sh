@@ -12,7 +12,7 @@ fi
 
 # create test csv files
 for n in 10 100 1000 10000 100000 1000000 10000000; do
-    file="test_"$n"_rows.csv"
+    file="csv/test_"$n"_rows.csv"
     
     if [ ! -f $file ]; then
 	echo "creating $n row dataset"
