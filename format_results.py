@@ -36,5 +36,5 @@ if __name__ == '__main__':
         full_results_dict[row_num] = create_dict(dir + f)
 
     # dump to json
-    with open("results/postgre_results.json", "w") as f:
+    with open("results/postgre_direct_benchmark_results.json", "w") as f:
         json.dump(full_results_dict, f)
