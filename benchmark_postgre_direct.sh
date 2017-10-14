@@ -20,7 +20,8 @@ touch $results_file
 # loop through each task
 for task in load select filter groupby_agg; do
     echo $task >> $results_file
-	
+    echo "running "$task" for "$1" using postgre (direct)"
+    
     case $task in
 	load) query1="DELETE FROM test_table;"
 	      query2a="\COPY test_table FROM ""'"$1"'"
@@ -41,21 +42,14 @@ for task in load select filter groupby_agg; do
     # repeat for N replicates
     for i in $(seq 1 $2); do
 	if [ $task = "load" ]; then
-	    #t1=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query1" > /dev/null)
-	    #t2=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query2" > /dev/null)
-	    #T=$(t1+t1)
 	    T="$(date +%s%N)"
 	    run_psql "$query1" "$query2"
 	    T="$(($(date +%s%N)-T))" # T="$(($(date +%s%N)-T))"
-	    echo "$query1" "$query2"
 	    echo $T >> $results_file	    
 	else
-	    # T=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query" > /dev/null)
-	    # echo $T >> $results_file
 	    T="$(date +%s%N)"
 	    run_psql "$query"
 	    T="$(($(date +%s%N)-T))"
-	    echo "$query"
 	    echo $T >> $results_file
 	fi
     done
@@ -77,7 +71,7 @@ fi
 
 # loop through each csv file
 FILES=csv/*.csv
-N=100
+N=10
 
 for f in $FILES; do
     run_test $f $N
