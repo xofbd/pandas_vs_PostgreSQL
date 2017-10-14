@@ -23,4 +23,4 @@ done
 # run pandas benchmark
 python benchmark_test.py postgre
 python benchmark_test.py pandas
-./benchmark_postgre_direch.sh
+./benchmark_postgre_direct.sh
