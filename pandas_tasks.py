@@ -27,3 +27,6 @@ class PandasTasks(object):
 
     def get_num_rows(self):
         return len(self.df)
+
+    def clean_up(self):
+        del(self.df)
