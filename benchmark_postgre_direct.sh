@@ -49,12 +49,14 @@ for task in load select filter groupby_agg; do
 	    T="$(($(date +%s%N)-T))" # T="$(($(date +%s%N)-T))"
 	    echo "$query1" "$query2"
 	    echo $T >> $results_file	    
-      
-	    echo "$query1" "$query2"
-	    echo $T >> $results_file
 	else
 	    # T=$(/usr/bin/time -f "%e" psql -U $USER -d $USER -c "$query" > /dev/null)
 	    # echo $T >> $results_file
+	    T="$(date +%s%N)"
+	    run_psql "$query"
+	    T="$(($(date +%s%N)-T))"
+	    echo "$query"
+	    echo $T >> $results_file
 	fi
     done
 done
@@ -85,7 +87,7 @@ done
 mv time_results* parts/
 
 # format results
-python format_results
+python format_results.py
 
 # clean up
 rm -rf parts
