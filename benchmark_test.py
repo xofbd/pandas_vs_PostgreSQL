@@ -28,6 +28,7 @@ def run_test(tool, csv_file, N=10):
 
         benchmark_dict[task] = task_time
 
+    tool_task.clean_up()
     return benchmark_dict, tool_task.get_num_rows()
 
 if __name__ == '__main__':
