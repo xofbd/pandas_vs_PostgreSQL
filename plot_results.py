@@ -33,6 +33,9 @@ if __name__ == '__main__':
 
     pandas_task_stats = calc_stats(pandas_results)
     postgre_task_stats = calc_stats(postgre_results)
+    title_labels = dict(
+        zip(['load', 'select', 'filter', 'groupby_agg'],
+            ['Load', 'Select', 'Filter', 'Group By and Aggregate']))
 
     for task in pandas_task_stats.keys():
         x_pandas = pandas_task_stats[task].keys()
@@ -49,7 +52,9 @@ if __name__ == '__main__':
             linewidth=2)
 
         plt.xlabel('Number of Rows (-)', fontsize=16)
+        plt.xticks(fontsize=16)
         plt.ylabel('Mean Runtime (seconds)', fontsize=16)
-        plt.title(task, fontsize=16)
+        plt.yticks(fontsize=16)
+        plt.title(title_labels[task], fontsize=16)
         plt.legend(['pandas', 'Postgre'], loc='upper left', fontsize=16)
         plt.show()
