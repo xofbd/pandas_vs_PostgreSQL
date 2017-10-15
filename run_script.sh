@@ -21,7 +21,7 @@ for n in 10 100 1000 10000 100000 1000000 10000000; do
 done
 
 # run pandas benchmark
-num_replicates=10
+num_replicates=100
 python benchmark_test.py postgre $num_replicates
 python benchmark_test.py pandas $num_replicates
-./benchmark_postgre_direct.sh $num_replicates
+# ./benchmark_postgre_direct.sh $num_replicates
