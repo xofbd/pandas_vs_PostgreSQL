@@ -2,6 +2,7 @@ from collections import OrderedDict
 import json
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
 
 
 def calc_stats(data_dict):
@@ -22,6 +23,8 @@ def calc_stats(data_dict):
     return task_stats
 
 if __name__ == '__main__':
+
+    # load results
     with open('results/pandas_benchmark.json', 'r') as f:
         pandas_results = json.load(f)
 
@@ -38,10 +41,15 @@ if __name__ == '__main__':
         x_postgre = postgre_task_stats[task].keys()
         y_postgre = postgre_task_stats[task].values()
 
-        plt.loglog(x_pandas, y_pandas, '--o', markersize=8, linewidth=2)
-        plt.loglog(x_postgre, y_postgre, '--o', markersize=8, linewidth=2)
+        plt.loglog(
+            x_pandas, y_pandas, marker='o', markersize=8, linestyle='--',
+            linewidth=2)
+        plt.loglog(
+            x_postgre, y_postgre, marker='o', markersize=8, linestyle='--',
+            linewidth=2)
 
-        plt.xlabel('Number of Rows (-)')
-        plt.ylabel('Mean Runtime (seconds)')
-        plt.title(task)
+        plt.xlabel('Number of Rows (-)', fontsize=16)
+        plt.ylabel('Mean Runtime (seconds)', fontsize=16)
+        plt.title(task, fontsize=16)
+        plt.legend(['pandas', 'Postgre'], loc='upper left', fontsize=16)
         plt.show()
