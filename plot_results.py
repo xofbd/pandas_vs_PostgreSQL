@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import json
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,7 +12,7 @@ def calc_stats(data_dict):
     task_stats = {}
 
     for task in tasks:
-        stats = {}
+        stats = OrderedDict()
 
         for row in num_rows:
             stats[row] = np.array(data_dict[str(row)][task]).mean()
@@ -30,8 +31,17 @@ if __name__ == '__main__':
     pandas_task_stats = calc_stats(pandas_results)
     postgre_task_stats = calc_stats(postgre_results)
 
-    plt.semilogx(
-        pandas_task_stats['select'].keys(), pandas_task_stats['select'].values(), 'o')
-    plt.semilogx(
-        postgre_task_stats['select'].keys(), postgre_task_stats['select'].values(), 'o')
-    plt.show()
+    for task in pandas_task_stats.keys():
+        x_pandas = pandas_task_stats[task].keys()
+        y_pandas = pandas_task_stats[task].values()
+
+        x_postgre = postgre_task_stats[task].keys()
+        y_postgre = postgre_task_stats[task].values()
+
+        plt.loglog(x_pandas, y_pandas, '--o', markersize=8, linewidth=2)
+        plt.loglog(x_postgre, y_postgre, '--o', markersize=8, linewidth=2)
+
+        plt.xlabel('Number of Rows (-)')
+        plt.ylabel('Mean Runtime (seconds)')
+        plt.title(task)
+        plt.show()
