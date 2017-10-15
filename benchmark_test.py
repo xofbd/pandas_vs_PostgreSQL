@@ -4,6 +4,16 @@ from postgre_tasks import PostgreTasks
 
 
 def run_test(tool, csv_file, N=10):
+    """Return dictionary of benchmark results and number of rows in the dataset.
+
+
+    Positional arguments:
+        tool: tool to use for benchmark (pandas or postgre)
+        csv_file: csv file to use for DataFrame/table creation
+
+    Keyword arguments:
+        N: number of test replicates
+    """
 
     # define tool to use
     if tool.lower() == 'pandas':
@@ -39,11 +49,12 @@ if __name__ == '__main__':
     import sys
 
     tool = sys.argv[1].lower()
+    num_replicates = sys.argv[2]
     files = os.listdir('csv')
     result_dict = {}
 
     for f in files:
-        results, row = run_test(tool, 'csv/' + f, N=10)
+        results, row = run_test(tool, 'csv/' + f, N=num_replicates)
         result_dict[str(row)] = results
 
     # dump dictionary to json
