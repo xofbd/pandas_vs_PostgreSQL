@@ -1,3 +1,4 @@
 csv/*
 old/*
+.ipynb_checkpoints/*
 *pyc
