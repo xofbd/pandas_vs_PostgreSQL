@@ -49,7 +49,7 @@ if __name__ == '__main__':
     import sys
 
     tool = sys.argv[1].lower()
-    num_replicates = sys.argv[2]
+    num_replicates = int(sys.argv[2])
     files = os.listdir('csv')
     result_dict = {}
 
