@@ -44,6 +44,7 @@ if __name__ == '__main__':
         x_postgre = postgre_task_stats[task].keys()
         y_postgre = postgre_task_stats[task].values()
 
+        f = plt.figure()
         plt.loglog(
             x_pandas, y_pandas, marker='o', markersize=8, linestyle='--',
             linewidth=2)
@@ -58,4 +59,5 @@ if __name__ == '__main__':
         plt.title(title_labels[task], fontsize=16)
         plt.legend(['pandas', 'Postgre'], loc='upper left', fontsize=16)
         plt.tight_layout()
-        plt.savefig('figure/' + task + '_results_plot.png')
+        f.savefig('figures/' + task + '_results_plot.png')
+        # plt.show()
