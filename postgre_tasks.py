@@ -63,7 +63,7 @@ class PostgreTasks(object):
         JOIN test_table_B on test_table_A.id = test_table.B.id;
         """
 
-        self.cur.execute("SELECT * FROM test_table")
+        self.cur.execute(query)
 
     def get_num_rows(self):
         self.cur.execute("SELECT COUNT(*) FROM test_table;")
