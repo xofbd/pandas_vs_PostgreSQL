@@ -68,10 +68,11 @@ class PostgreTasks(object):
     def get_num_rows(self):
         self.cur.execute("SELECT COUNT(*) FROM test_table;")
         num_rows = self.cur.fetchall()
+
         return int(num_rows[0][0])
 
     def clean_up(self):
         self.cur.execute("DROP TABLE IF EXISTS test_table_A;")
         self.cur.execute("DROP TABLE IF EXISTS test_table_B;")
-        self.cur.commit()
-        self.close()
+        self.conn.commit()
+        self.conn.close()
