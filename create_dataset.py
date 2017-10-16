@@ -19,9 +19,9 @@ def create_csv(n=1000):
     df_A = pd.DataFrame(dict(zip(columns, [id, section, score_1, score_2])))
     df_B = pd.DataFrame({columns[0]: score_3})
 
-    df_A.to_csv('csv/test_A_' + str(n) +
+    df_A.to_csv('csv/A/test_A_' + str(n) +
                 '_rows.csv', index=False, header=False)
-    df_B.to_csv('csv/test_B_' + str(n) +
+    df_B.to_csv('csv/B/test_B_' + str(n) +
                 '_rows.csv', index=False, header=False)
 
 if __name__ == '__main__':
