@@ -34,8 +34,8 @@ if __name__ == '__main__':
     pandas_task_stats = calc_stats(pandas_results)
     postgre_task_stats = calc_stats(postgre_results)
     title_labels = dict(
-        zip(['load', 'select', 'filter', 'groupby_agg'],
-            ['Load', 'Select', 'Filter', 'Group By and Aggregate']))
+        zip(['load', 'select', 'filter', 'groupby_agg', 'join'],
+            ['Load', 'Select', 'Filter', 'Group By and Aggregate', 'Join']))
 
     for task in pandas_task_stats.keys():
         x_pandas = pandas_task_stats[task].keys()
@@ -44,6 +44,7 @@ if __name__ == '__main__':
         x_postgre = postgre_task_stats[task].keys()
         y_postgre = postgre_task_stats[task].values()
 
+        f = plt.figure()
         plt.loglog(
             x_pandas, y_pandas, marker='o', markersize=8, linestyle='--',
             linewidth=2)
@@ -58,4 +59,4 @@ if __name__ == '__main__':
         plt.title(title_labels[task], fontsize=16)
         plt.legend(['pandas', 'Postgre'], loc='upper left', fontsize=16)
         plt.tight_layout()
-        plt.show()
+        f.savefig('figures/' + task + '_results_plot.png')
