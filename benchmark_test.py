@@ -1,6 +1,7 @@
 from contexttimer import Timer
 from pandas_tasks import PandasTasks
 from postgre_tasks import PostgreTasks
+import re
 
 
 def run_test(tool, csv_file_A, csv_file_B, N=10):
@@ -27,11 +28,10 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
     # loop through each task
     tasks = ('load', 'select', 'filter', 'groupby_agg', 'join')
     benchmark_dict = {}
-    num_rows = tool_task.get_num_rows()
+    num_rows = int(re.findall(r'\d+', csv_file_A)[0])
 
     for task in tasks:
-        print "running " + task + " for " + int(num_rows) + " rows "
-        " using " + tool
+        print "running " + task + " for " + str(num_rows) + " rows " + " using " + tool
         task_time = []
 
         for _ in xrange(N):
@@ -42,6 +42,7 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
         benchmark_dict[task] = task_time
 
     tool_task.clean_up()
+
     return benchmark_dict, num_rows
 
 if __name__ == '__main__':
