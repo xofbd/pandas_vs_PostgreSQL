@@ -1,8 +1,12 @@
 #!/bin/bash
 
 # create csv directory
-if [ ! -d csv ]; then
-    mkdir csv
+if [ ! -d csv/A ]; then
+    mkdir csv/A
+fi
+
+if [ ! -d csv/B ]; then
+    mkdir csv/B
 fi
 
 # create results directory
