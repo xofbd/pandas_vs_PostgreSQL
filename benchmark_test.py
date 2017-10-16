@@ -31,7 +31,7 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
     num_rows = int(re.findall(r'\d+', csv_file_A)[0])
 
     for task in tasks:
-        print "running " + task + " for " + str(num_rows) + " rows " + " using " + tool
+        print "running " + task + " for " + str(num_rows) + " rows using " + tool
         task_time = []
 
         for _ in xrange(N):
