@@ -7,26 +7,35 @@ import pandas as pd
 
 class PandasTasks(object):
 
-    def __init__(self, csv_file):
-        self.csv_file = csv_file
-        self.df = None
-        self.columns = ('score_1', 'score_2', 'section')
+    def __init__(self, csv_file_A, csv_file_B):
+        self.csv_file_A = csv_file_A
+        self.csv_file_B = csv_file_B
+        self.df_A = None
+        self.df_B = None
+        self.columns_A = ('id', 'score_1', 'score_2', 'section')
+        self.columns_B = 'id'
 
     def load(self):
-        self.df = pd.read_csv(self.csv_file, header=None, index_col=False,
-                              names=self.columns)
+        self.df_A = pd.read_csv(self.csv_file_A, header=None, index_col=False,
+                                names=self.columns_A)
+        self.df_B = pd.read_csv(self.csv_file_B, header=None, index_col=False,
+                                names=self.columns_B)
 
     def select(self):
-        self.df['score_1']
+        self.df_A['score_1']
 
     def filter(self):
-        self.df[self.df['section'] == 'A']
+        self.df_A[self.df_A['section'] == 'A']
 
     def groupby_agg(self):
-        self.df.groupby('section').agg({'score_1': 'mean', 'score_2': 'max'})
+        self.df_A.groupby('section').agg({'score_1': 'mean', 'score_2': 'max'})
+
+    def join(self):
+        self.df_A.merge(self.df_B, left_on='id', right_on='id')
 
     def get_num_rows(self):
-        return len(self.df)
+        return len(self.df_A)
 
     def clean_up(self):
-        del(self.df)
+        del(self.df_A)
+        del(self.df_B)
