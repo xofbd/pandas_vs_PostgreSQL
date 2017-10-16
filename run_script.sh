@@ -12,9 +12,10 @@ fi
 
 # create test csv files
 for n in 10 100 1000 10000 100000 1000000 10000000; do
-    file="csv/test_"$n"_rows.csv"
+    file_A="csv/test_A_"$n"_rows.csv"
+    file_B="csv/test_A_"$n"_rows.csv"
     
-    if [ ! -f $file ]; then
+    if [ ! -f $file_A ] || [ ! -f $file_B ]; then
 	echo "creating $n row dataset"
 	python create_dataset.py $n 
     fi
