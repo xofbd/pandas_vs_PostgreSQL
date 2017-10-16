@@ -16,8 +16,8 @@ fi
 
 # create test csv files
 for n in 10 100 1000 10000 100000 1000000 10000000; do
-    file_A="csv/test_A_"$n"_rows.csv"
-    file_B="csv/test_A_"$n"_rows.csv"
+    file_A="csv/A/test_A_"$n"_rows.csv"
+    file_B="csv/B/test_B_"$n"_rows.csv"
     
     if [ ! -f $file_A ] || [ ! -f $file_B ]; then
 	echo "creating $n row dataset"
