@@ -1,7 +1,3 @@
-# author: Don Fox
-# date: September 30, 2017
-# file name: pandas_tasks.py
-
 import pandas as pd
 
 
@@ -13,7 +9,7 @@ class PandasTasks(object):
         self.df_A = None
         self.df_B = None
         self.columns_A = ('id', 'score_1', 'score_2', 'section')
-        self.columns_B = 'id'
+        self.columns_B = ('id', 'score_3')
 
     def load(self):
         self.df_A = pd.read_csv(self.csv_file_A, header=None, index_col=False,
