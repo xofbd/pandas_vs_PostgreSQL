@@ -24,12 +24,14 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
     else:
         raise ValueError("tool must either be pandas or postgre")
 
+    # loop through each task
     tasks = ('load', 'select', 'filter', 'groupby_agg', 'join')
     benchmark_dict = {}
+    num_rows = tool_task.get_num_rows()
 
-    # loop through each task
     for task in tasks:
-        print "running " + task + " for " + csv_file_A + " using " + tool
+        print "running " + task + " for " + int(num_rows) + " rows "
+        " using " + tool
         task_time = []
 
         for _ in xrange(N):
@@ -39,9 +41,7 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
 
         benchmark_dict[task] = task_time
 
-    num_rows = tool_task.get_num_rows()
     tool_task.clean_up()
-
     return benchmark_dict, num_rows
 
 if __name__ == '__main__':
