@@ -60,4 +60,3 @@ if __name__ == '__main__':
         plt.legend(['pandas', 'Postgre'], loc='upper left', fontsize=16)
         plt.tight_layout()
         f.savefig('figures/' + task + '_results_plot.png')
-        # plt.show()
