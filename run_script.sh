@@ -1,18 +1,11 @@
 #!/bin/bash
 
-# create csv directory
-if [ ! -d csv/A ]; then
-    mkdir csv/A
-fi
-
-if [ ! -d csv/B ]; then
-    mkdir csv/B
-fi
-
-# create results directory
-if [ ! -d results ]; then
-    mkdir results
-fi
+# create directories
+for dir in csv csv/A csv/B results; do
+    if [ ! -d $dir ]; then
+	mkdir $dir
+    fi
+done
 
 # create test csv files
 for n in 10 100 1000 10000 100000 1000000 10000000; do
