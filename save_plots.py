@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
         plt.xlabel('Number of Rows (-)', fontsize=16)
         plt.xticks(fontsize=16)
-        plt.ylabel('Mean Runtime (seconds)', fontsize=16)
+        plt.ylabel('Mean Execution Time (seconds)', fontsize=16)
         plt.yticks(fontsize=16)
         plt.title(title_labels[task], fontsize=16)
         plt.legend(['pandas', 'Postgre'], loc='upper left', fontsize=16)
