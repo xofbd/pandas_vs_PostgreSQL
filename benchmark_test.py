@@ -1,3 +1,4 @@
+import re
 from contexttimer import Timer
 from pandas_tasks import PandasTasks
 from postgre_tasks import PostgreTasks
@@ -52,12 +53,15 @@ if __name__ == '__main__':
     tool = sys.argv[1].lower()
     num_reps = int(sys.argv[2])
 
+    # get csv files names
     files_A = os.listdir('csv/A')
     files_B = os.listdir('csv/B')
+    files_A.sort()
+    files_B.sort()
 
     result_dict = {}
 
-    for f_A, f_B in zip(files_A.sort(), files_B.sort()):
+    for f_A, f_B in zip(files_A, files_B):
         results, row = run_test(
             tool, 'csv/A/' + f_A, 'csv/B/' + f_B, N=num_reps)
         result_dict[str(row)] = results
