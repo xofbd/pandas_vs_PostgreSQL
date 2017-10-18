@@ -49,7 +49,7 @@ if __name__ == '__main__':
             x_pandas, y_pandas, marker='o', markersize=8, linestyle='--',
             linewidth=2)
         plt.loglog(
-            x_postgre, y_postgre, marker='o', markersize=8, linestyle='--',
+            x_postgre, y_postgre, marker='s', markersize=8, linestyle='--',
             linewidth=2)
 
         plt.xlabel('Number of Rows (-)', fontsize=16)
