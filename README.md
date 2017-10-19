@@ -14,4 +14,4 @@ psycopg2
 ```
 
 ### The Benchmark
-The benchmark is performed for following tasks: load csv, select column, filter, and group by and applying aggregate function. The results are stored as a separate JSON files for pandas and Postgre. The JSON file contains the results for each task and for each table size.
+The benchmark is performed for following tasks: load csv, select column, filter, and group by and applying aggregate function. The results are stored as a separate JSON files for pandas and Postgre. The JSON file contains the results for each task and for each table size. A write-up of the results are found in the `analysis_writeup.ipynb` notebook.
