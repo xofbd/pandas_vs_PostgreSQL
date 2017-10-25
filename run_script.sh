@@ -20,6 +20,6 @@ done
 
 # run pandas benchmark
 num_replicates=100
-python benchmark_test.py postgre $num_replicates
+python benchmark_test.py postgres $num_replicates
 python benchmark_test.py pandas $num_replicates
 # ./benchmark_postgre_direct.sh $num_replicates

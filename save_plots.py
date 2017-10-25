@@ -28,11 +28,11 @@ if __name__ == '__main__':
     with open('results/pandas_benchmark.json', 'r') as f:
         pandas_results = json.load(f)
 
-    with open('results/postgre_benchmark.json', 'r') as f:
-        postgre_results = json.load(f)
+    with open('results/postgres_benchmark.json', 'r') as f:
+        postgres_results = json.load(f)
 
     pandas_task_stats = calc_stats(pandas_results)
-    postgre_task_stats = calc_stats(postgre_results)
+    postgres_task_stats = calc_stats(postgres_results)
     title_labels = dict(
         zip(['load', 'select', 'filter', 'groupby_agg', 'join'],
             ['Load', 'Select', 'Filter', 'Group By and Aggregate', 'Join']))
@@ -41,15 +41,15 @@ if __name__ == '__main__':
         x_pandas = pandas_task_stats[task].keys()
         y_pandas = pandas_task_stats[task].values()
 
-        x_postgre = postgre_task_stats[task].keys()
-        y_postgre = postgre_task_stats[task].values()
+        x_postgres = postgres_task_stats[task].keys()
+        y_postgres = postgres_task_stats[task].values()
 
         f = plt.figure()
         plt.loglog(
             x_pandas, y_pandas, marker='o', markersize=8, linestyle='--',
             linewidth=2)
         plt.loglog(
-            x_postgre, y_postgre, marker='s', markersize=8, linestyle='--',
+            x_postgres, y_postgres, marker='s', markersize=8, linestyle='--',
             linewidth=2)
 
         plt.xlabel('Number of Rows (-)', fontsize=16)
@@ -57,6 +57,6 @@ if __name__ == '__main__':
         plt.ylabel('Mean Execution Time (seconds)', fontsize=16)
         plt.yticks(fontsize=16)
         plt.title(title_labels[task], fontsize=16)
-        plt.legend(['pandas', 'Postgre'], loc='upper left', fontsize=16)
+        plt.legend(['pandas', 'Postgres'], loc='upper left', fontsize=16)
         plt.tight_layout()
         f.savefig('figures/' + task + '_results_plot.png', dpi=300)

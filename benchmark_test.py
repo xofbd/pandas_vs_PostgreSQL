@@ -1,7 +1,7 @@
 import re
 from contexttimer import Timer
 from pandas_tasks import PandasTasks
-from postgre_tasks import PostgreTasks
+from postgres_tasks import PostgresTasks
 
 
 def run_test(tool, csv_file_A, csv_file_B, N=10):
@@ -9,7 +9,7 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
 
 
     Positional arguments:
-        tool: tool to use for benchmark (pandas or postgre)
+        tool: tool to use for benchmark (pandas or postgres)
         csv_file_A: csv file name to use for DataFrame/table A
         csv_file_B: csv file name to use for DataFrame/table B
 
@@ -20,10 +20,10 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
     # define tool to use
     if tool.lower() == 'pandas':
         tool_task = PandasTasks(csv_file_A, csv_file_B)
-    elif tool.lower() == 'postgre' or tool.lower() == 'postgresql':
-        tool_task = PostgreTasks(csv_file_A, csv_file_B)
+    elif tool.lower() == 'postgres' or tool.lower() == 'postgresql':
+        tool_task = PostgresTasks(csv_file_A, csv_file_B)
     else:
-        raise ValueError("tool must either be pandas or postgre")
+        raise ValueError("tool must either be pandas or postgres")
 
     # loop through each task
     tasks = ('load', 'select', 'filter', 'groupby_agg', 'join')

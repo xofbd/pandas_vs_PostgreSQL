@@ -2,13 +2,13 @@ import os
 import psycopg2
 
 
-class PostgreTasks(object):
+class PostgresTasks(object):
 
     def __init__(self, csv_file_A, csv_file_B):
         self.csv_file_A = csv_file_A
         self.csv_file_B = csv_file_B
 
-        # get user name for postgre connection
+        # get user name for postgres connection
         user = os.popen("echo $USER").read().strip()
         dbname = user
 
