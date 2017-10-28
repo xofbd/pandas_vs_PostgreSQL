@@ -28,8 +28,6 @@ for file_A in csv/A/*; do
     
     pgbench -ln -t $1 --file=queries/load.sql > /dev/null
     mv pgbench_log* log/pgbench_load_$num_rows".log"
-    # pgbench -ln -t $1 --file=queries/load_B.sql > /dev/null
-    # mv pgbench_log* log/pgbench_load_B_$num_rows".log"
     
     for task in select filter groupby_agg join; do
 	echo $task
