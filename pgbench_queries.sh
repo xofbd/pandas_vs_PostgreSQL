@@ -8,7 +8,7 @@ if [ ! -d log ]; then
     mkdir log
 fi
 
-if [ ! -e pgbench_log.* ]; then
+if [ -e pgbench_log.* ]; then
     rm pgbench_log*
 fi
 
