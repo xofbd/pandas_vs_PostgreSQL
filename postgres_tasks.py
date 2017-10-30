@@ -31,6 +31,7 @@ class PostgresTasks(object):
         self.cur.execute(query_A)
         self.cur.execute(query_B)
 
+        # load csv files to tables
         with open(self.csv_file_A, 'r') as f:
             self.cur.copy_from(f, "test_table_A", sep=',')
 
