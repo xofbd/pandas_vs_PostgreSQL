@@ -3,12 +3,18 @@
 # Run PostgreSQL benchmark using pgbench. The only positional parameter is the
 # the number of benchmark replicates.
 
-# initialize directories
+# initialize directories and remove old pgbench_log files
 if [ ! -d log ]; then
     mkdir log
 fi
 
+if [ ! -e pgbench_log.* ]; then
+    rm pgbench_log*
+fi
+
+# loop through all csv files
 for file_A in csv/A/*; do
+    
     # initialize table and variables
     psql -U $USER -d $USER --file=queries/init.sql > /dev/null
     num_rows=$(echo $file_A | grep -oP '\d+')
