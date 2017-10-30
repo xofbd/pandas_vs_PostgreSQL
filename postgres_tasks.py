@@ -31,15 +31,17 @@ class PostgresTasks(object):
         self.cur.execute(query_A)
         self.cur.execute(query_B)
 
-    def load(self):
-        self.cur.execute("DELETE FROM test_table_A;")
-        self.cur.execute("DELETE FROM test_table_B;")
-
         with open(self.csv_file_A, 'r') as f:
             self.cur.copy_from(f, "test_table_A", sep=',')
 
         with open(self.csv_file_B, 'r') as f:
             self.cur.copy_from(f, "test_table_B", sep=',')
+
+    def load(self):
+        self.cur.execute("DELETE FROM test_table_A;")
+
+        with open(self.csv_file_A, 'r') as f:
+            self.cur.copy_from(f, "test_table_A", sep=',')
 
     def select(self):
         self.cur.execute('SELECT section FROM test_table_A;')
