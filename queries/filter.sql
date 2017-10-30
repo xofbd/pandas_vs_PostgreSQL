@@ -1,1 +1,1 @@
-SELECT section FROM test_table_A WHERE section = 'A';
+SELECT * FROM test_table_A WHERE section = 'A';
