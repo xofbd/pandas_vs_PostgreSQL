@@ -36,7 +36,7 @@ for file_A in csv/A/*; do
     echo "DELETE FROM test_table_A;" > queries/load_A.sql
     echo "$query_A" >> queries/load_A.sql
 
-    echo "running "$task" for "$num_rows" rows using Postgres"
+    echo "running load for "$num_rows" rows using Postgres"
     pgbench -ln -t $1 --file=queries/load_A.sql > /dev/null
     mv pgbench_log* log/pgbench_load_$num_rows".log"
     psql -U $USER -d $USER --file=queries/clean_up.sql
