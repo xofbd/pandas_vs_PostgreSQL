@@ -12,7 +12,6 @@ for file_A in csv/A/*; do
     # initialize table and variables
     psql -U $USER -d $USER --file=queries/init.sql > /dev/null
     num_rows=$(echo $file_A | grep -oP '\d+')
-    echo $num_rows" rows"
 
     # create and run loading csv query file
     file_B="csv/B/test_B_"$num_rows"_rows.csv"
