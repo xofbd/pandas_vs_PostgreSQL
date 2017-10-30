@@ -16,7 +16,7 @@ fi
 for file_A in csv/A/*; do
     
     # initialize table and variables
-    psql -U $USER -d $USER --file=queries/init.sql > /dev/null
+    psql -U $USER -d $USER -f queries/init.sql > /dev/null
     num_rows=$(echo $file_A | grep -oP '\d+')
 
     # create and run loading csv query file
@@ -29,12 +29,12 @@ for file_A in csv/A/*; do
     echo "$query_A" >> queries/load.sql
     echo "$query_B" >> queries/load.sql
 
-    psql -U $USER -d $USER --file=queries/load.sql > /dev/null
+    psql -U $USER -d $USER -f queries/load.sql > /dev/null
 
     # benchmark each task
     for task in select filter groupby_agg join; do
 	echo "running "$task" for "$num_rows" rows using Postgres"
-	pgbench -ln -t $1 --file=queries/$task.sql > /dev/null
+	pgbench -ln -t $1 -f queries/$task.sql > /dev/null
 	mv pgbench_log* log/pgbench_$task"_"$num_rows".log"
     done
 
@@ -43,9 +43,9 @@ for file_A in csv/A/*; do
     echo "$query_A" >> queries/load_A.sql
 
     echo "running load for "$num_rows" rows using Postgres"
-    pgbench -ln -t $1 --file=queries/load_A.sql > /dev/null
+    pgbench -ln -t $1 -f queries/load_A.sql > /dev/null
     mv pgbench_log* log/pgbench_load_$num_rows".log"
-    psql -U $USER -d $USER --file=queries/clean_up.sql
+    psql -U $USER -d $USER -f queries/clean_up.sql
 done
 
 # format results from logs and clean up		
