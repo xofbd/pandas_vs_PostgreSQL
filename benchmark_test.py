@@ -26,7 +26,7 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
         raise ValueError("tool must either be pandas or postgres")
 
     # loop through each task
-    tasks = ('load', 'select', 'filter', 'groupby_agg', 'join')
+    tasks = ('select', 'filter', 'groupby_agg', 'join', 'load')
     benchmark_dict = {}
     num_rows = int(re.findall(r'\d+', csv_file_A)[0])
 
