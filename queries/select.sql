@@ -1,1 +1,1 @@
-SELECT section FROM test_table_A;
+SELECT score_1 FROM test_table_A;
