@@ -30,5 +30,5 @@ for n in num_rows:
     results[n] = results_for_row
 
 # dump results to JSON
-with open('results/pgbench.json', 'w') as f:
+with open('results/postgres_benchmark.json', 'w') as f:
     json.dump(results, f)
