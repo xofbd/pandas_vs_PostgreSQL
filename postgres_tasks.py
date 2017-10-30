@@ -45,11 +45,11 @@ class PostgresTasks(object):
             self.cur.copy_from(f, "test_table_A", sep=',')
 
     def select(self):
-        self.cur.execute('SELECT section FROM test_table_A;')
+        self.cur.execute('SELECT score_1 FROM test_table_A;')
 
     def filter(self):
         self.cur.execute(
-            "SELECT section FROM test_table_A WHERE section = 'A';")
+            "SELECT * FROM test_table_A WHERE section = 'A';")
 
     def groupby_agg(self):
         query = """
