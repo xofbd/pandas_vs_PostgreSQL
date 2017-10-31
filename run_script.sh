@@ -20,5 +20,6 @@ done
 
 # run pandas benchmark
 num_replicates=100
-./pgbench_queries.sh  $num_replicates
+python benchmark_test.py psycopg2 $num_replicates
 python benchmark_test.py pandas $num_replicates
+./pgbench_queries.sh $num_replicates
