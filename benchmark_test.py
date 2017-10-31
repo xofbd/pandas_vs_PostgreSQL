@@ -20,7 +20,7 @@ def run_test(tool, csv_file_A, csv_file_B, N=10):
     # define tool to use
     if tool.lower() == 'pandas':
         tool_task = PandasTasks(csv_file_A, csv_file_B)
-    elif tool.lower() == 'postgres' or tool.lower() == 'postgresql':
+    elif tool.lower() in ('postgresql', 'postgres', 'psycopg2'):
         tool_task = PostgresTasks(csv_file_A, csv_file_B)
     else:
         raise ValueError("tool must either be pandas or postgres")
