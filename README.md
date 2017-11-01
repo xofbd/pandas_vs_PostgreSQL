@@ -2,7 +2,7 @@
 A benchmark comparing pandas and PostgreSQL for various table sizes and commands.
 
 ## Getting Started
-To run the benchmark, run `./run_script.sh`. The number of test replicates and size of the table/DataFrame can be adjusted in `run_script.sh`. The table/DataFrame are created from csv files. If these csv files do not exist, `run_script.sh` creates them by calling on `create_dataset.py`.
+To start the benchmark, run `run_script.sh`. The number of test replicates and size of the table/DataFrame can be adjusted in `run_script.sh`. The table/DataFrame are created from csv files. If these csv files do not exist, `run_script.sh` creates them by calling on `create_dataset.py`.
 
 ### Prerequisites
 Apart from having pandas and Postgre installed, you need the following Python packages.
